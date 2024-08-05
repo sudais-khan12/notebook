@@ -24,10 +24,13 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
+      // check if the user already exists
       let user = await User.findOne({ email: req.body.email });
       if (user) {
         return res.status(400).json({ error: "User already exists" });
       }
+
+      // create a new user
       user = await User.create({
         name: req.body.name,
         email: req.body.email,
@@ -42,4 +45,4 @@ router.post(
   }
 );
 
-module.exports = router;
+module.exports = router;  
