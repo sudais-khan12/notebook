@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
 router.post(
   "/createuser",
@@ -31,13 +32,16 @@ router.post(
       }
 
       // create a new user
-      user = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.password, salt, async (err, hash) => {
+          user = await User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: hash,
+          });
+          res.json(user);
+        });
       });
-
-      res.json(user);
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal Server Error");
@@ -45,4 +49,4 @@ router.post(
   }
 );
 
-module.exports = router;  
+module.exports = router;
