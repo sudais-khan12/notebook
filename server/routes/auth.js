@@ -5,7 +5,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "khan is khan";
-let fetchUser = require("../middleware/fetchUser");
+const fetchUser = require("../middleware/fetchUser");
 
 // Create Route
 
@@ -120,6 +120,18 @@ router.post("/getuser", fetchUser, async (req, res) => {
     }
 
     res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// logout route
+
+router.post("/logout", async (req, res) => {
+  try {
+    jwt.sign("", JWT_SECRET);
+    res.json({ message: "Logged out successfully" });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");
