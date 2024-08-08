@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
 import NoteState from "./context/notes/NoteState";
+import Alert from "./components/Alert";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -11,6 +12,7 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
+          <Alert  msg= "Note has been Deleted"/>
           <div className="container mt-3">
             <Routes>
               <Route path="/home" element={<Home />} />

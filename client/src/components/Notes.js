@@ -1,17 +1,22 @@
 import React, { useContext } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
+import AddNote from "./AddNote";
 
 const Notes = () => {
   const context = useContext(noteContext);
-  const { notes, setNotes } = context;
+  // eslint-disable-next-line
+  const { notes } = context;
   return (
-    <div className="row">
-      <h2>All Notes</h2>
-      {notes.map((note) => {
-        return <NoteItem note={note} />;
-      })}
-    </div>
+    <>
+      <AddNote />
+      <div className="row">
+        <h2>All Notes</h2>
+        {notes.map((note) => {
+          return <NoteItem key={note._id} note={note} />;
+        })}
+      </div>
+    </>
   );
 };
 
