@@ -7,9 +7,9 @@ const Navbar = () => {
     console.log(location);
   }, [location]);
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark py-4">
+    <nav className="navbar navbar-expand-lg bg-info py-4">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/home">
           My Notebook
         </Link>
         <button
@@ -31,7 +31,7 @@ const Navbar = () => {
                   location.pathname === "/home" ? "active" : ""
                 }`}
                 aria-current="page"
-                to="/home" 
+                to="/home"
               >
                 Home
               </Link>

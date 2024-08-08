@@ -5,7 +5,7 @@ const About = () => {
   const a = useContext(noteContext);
   return (
     <div>
-      I am {a.name} and my Roll Number is {a.id}
+      I am {a.content} and my Roll Number is {a.id}
     </div>
   );
 };
