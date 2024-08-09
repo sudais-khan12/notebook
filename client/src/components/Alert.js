@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 
 const Alert = (props) => {
   return (
     <div>
-      <div className="alert alert-info" role="alert">
+      <div className= {`alert alert-info`} role="alert">
         {props.msg}
       </div>
     </div>
   );
-};
+}
 
-export default Alert;
+export default Alert

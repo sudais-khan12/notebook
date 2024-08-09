@@ -3,10 +3,21 @@ import noteContext from "./noteContext";
 import Alert from "../../components/Alert";
 
 const NoteState = (props) => {
+  const [alert, setAlert] = useState(null);
   const host = "http://localhost:5000";
   const initialNotes = [];
 
   const [notes, setNotes] = useState(initialNotes);
+
+  const showAlert = (message, type) => {
+    setAlert({
+      msg: message,
+      type: type,
+    });
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  };
 
   // Get all Notes
 
@@ -47,7 +58,7 @@ const NoteState = (props) => {
       __v: 0,
     };
     setNotes(notes.concat(note));
-    console.log("New Note Added", note);
+    showAlert("New Note Has Been Added", "info");
   };
 
   // Delete a Note
@@ -64,6 +75,7 @@ const NoteState = (props) => {
 
     const newNotes = notes.filter((note) => note._id !== id);
     setNotes(newNotes);
+    showAlert("Note Has Been Deleted", "danger");
   };
 
   // Edit a Note
@@ -91,6 +103,7 @@ const NoteState = (props) => {
       }
     }
     setNotes(newNotes);
+    showAlert("New Note Has Been Updated", "warning");
   };
 
   return (
