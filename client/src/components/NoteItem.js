@@ -1,7 +1,11 @@
-import React from "react";
-import Alert from "./Alert";
+import React, { useContext } from "react";
+// import Alert from "./Alert";
+import noteContext from "../context/notes/noteContext";
+
 const NoteItem = (props) => {
-  const { note } = props;
+  const context = useContext(noteContext);
+  const { deleteNote } = context;
+  const { note, updateNote } = props;
   return (
     <div className="col-md-3">
       <div className="card bg-light border-info border-2 mb-3">
@@ -11,10 +15,16 @@ const NoteItem = (props) => {
         </div>
         <div>
           <i
+            onClick={() => {
+              deleteNote(note._id);
+            }}
             className="fa-solid fa-trash m-3"
             style={{ color: "red", cursor: "pointer" }}
           ></i>
           <i
+            onClick={() => {
+              updateNote(note);
+            }}
             className="fa-solid fa-file-pen m-2 text-info"
             style={{ cursor: "pointer" }}
           ></i>

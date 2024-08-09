@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-info py-4">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand" to="/">
           My Notebook
         </Link>
         <button
@@ -30,7 +30,7 @@ const Navbar = () => {
                   location.pathname === "/home" ? "active" : ""
                 }`}
                 aria-current="page"
-                to="/home"
+                to="/"
               >
                 Home
               </Link>
