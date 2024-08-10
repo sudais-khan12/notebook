@@ -5,9 +5,11 @@ const AddNote = () => {
   const context = useContext(noteContext);
   const { addNote } = context;
 
-  const [note, setNote] = useState({ title: "", content: "", tag: "" });
+  const [note, setNote] = useState({ title: "", content: "", tag: "default" });
   const handleSubmit = (e) => {
     e.preventDefault();
+    document.querySelectorAll("input").forEach((el) => (el.value = ""));
+    document.querySelector("textarea").value = "";
     addNote(note.title, note.content, note.tag);
   };
   const onChange = (e) => {
@@ -53,10 +55,16 @@ const AddNote = () => {
               id="content"
               name="content"
               rows="3"
+              placeholder="Any Content" 
               onChange={onChange}
             ></textarea>
           </div>
-          <button type="submit" className="btn btn-info" onClick={handleSubmit}>
+          <button
+            disabled={note.title.length < 5 || note.content.length < 5}
+            type="submit"
+            className="btn btn-info"
+            onClick={handleSubmit}
+          >
             Add <i className="fa-solid fa-check ms-2"></i>
           </button>
         </form>

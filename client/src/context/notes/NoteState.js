@@ -1,23 +1,11 @@
 import React, { useState } from "react";
 import noteContext from "./noteContext";
-import Alert from "../../components/Alert";
 
 const NoteState = (props) => {
-  const [alert, setAlert] = useState(null);
   const host = "http://localhost:5000";
   const initialNotes = [];
 
   const [notes, setNotes] = useState(initialNotes);
-
-  const showAlert = (message, type) => {
-    setAlert({
-      msg: message,
-      type: type,
-    });
-    setTimeout(() => {
-      setAlert(null);
-    }, 2000);
-  };
 
   // Get all Notes
 
@@ -37,7 +25,7 @@ const NoteState = (props) => {
   // Add a Note
 
   const addNote = async (title, content, tag) => {
-    await fetch(`${host}/api/notes/create`, {
+    const response = await fetch(`${host}/api/notes/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,19 +34,8 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, content, tag }),
     });
-
-    // const json = await response.json();
-    const note = {
-      _id: "66b19d7bc0b2401ad005fb461w1",
-      user: "66b17cbb6c3539cf08e2c012321",
-      title,
-      content,
-      tag,
-      date: "2024-08-06T03:50:19.576Z",
-      __v: 0,
-    };
+    const note = await response.json();
     setNotes(notes.concat(note));
-    showAlert("New Note Has Been Added", "info");
   };
 
   // Delete a Note
@@ -75,7 +52,6 @@ const NoteState = (props) => {
 
     const newNotes = notes.filter((note) => note._id !== id);
     setNotes(newNotes);
-    showAlert("Note Has Been Deleted", "danger");
   };
 
   // Edit a Note
@@ -103,7 +79,6 @@ const NoteState = (props) => {
       }
     }
     setNotes(newNotes);
-    showAlert("New Note Has Been Updated", "warning");
   };
 
   return (

@@ -24,8 +24,9 @@ const Notes = () => {
     id: "",
     etitle: "",
     econtent: "",
-    etag: "",
+    etag: "default",
   });
+
   const handleSubmit = (e) => {
     editNote(note.id, note.etitle, note.econtent, note.etag);
     e.preventDefault();
@@ -35,6 +36,7 @@ const Notes = () => {
   };
 
   const ref = useRef(null);
+
   return (
     <>
       <AddNote />
@@ -111,17 +113,11 @@ const Notes = () => {
             </div>
             <div className="modal-footer">
               <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
                 type="button "
                 className="btn btn-info"
                 onClick={handleSubmit}
                 data-bs-dismiss="modal"
+                disabled={note.etitle.length < 5 || note.econtent.length < 5}
               >
                 Update
               </button>
@@ -131,6 +127,7 @@ const Notes = () => {
       </div>
       <div className="row">
         <h2>All Notes</h2>
+        {notes.length === 0 && "No notes to display"}
         {notes
           .slice(0)
           .reverse()
