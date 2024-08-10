@@ -48,16 +48,16 @@ const NoteItem = (props) => {
               <h4>Tag </h4>
               <p>{note.tag}</p>
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer d-flex justify-content-start">
               <h5>Created on : </h5>
-              <small className="text-muted">
+              <small className="text-muted pt-1">
                 {new Date(note.date).toUTCString()}
               </small>
             </div>
           </div>
         </div>
       </div>
-      <div className="col-md-3 card bg-light border-info border-2 m-3">
+      <div className="col-md-3 card bg-light border-info border-2 m-2">
         <div className="" style={{ cursor: "pointer" }} onClick={show}>
           <span
             className="position-absolute top-0 translate-middle badge rounded-pill bg-info"
@@ -66,8 +66,16 @@ const NoteItem = (props) => {
             {note.tag}
           </span>
           <div className="card-body">
-            <h5 className="card-title">{note.title}</h5>
-            <p className="card-text">{note.content}</p>
+            <h5 className="card-title">
+              {note.title.length > 20
+                ? note.title.slice(0, 20) + " ..."
+                : note.title}
+            </h5>
+            <p className="card-text">
+              {note.content.length > 30
+                ? note.content.slice(0, 30) + " ..."
+                : note.content}
+            </p>
           </div>
         </div>
         <hr />
