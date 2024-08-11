@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import noteContext from "./noteContext";
+import Cookies from "js-cookie";
 
 const NoteState = (props) => {
   const host = "http://localhost:5000";
   const initialNotes = [];
 
   const [notes, setNotes] = useState(initialNotes);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZiMTlkYTVjMGIyNDAxYWQwMDVmYjRhIn0sImlhdCI6MTcyMjkxNjI2MX0.x0TmuevrcI0LbsLF0qWA0tXkIfZ5MAEFVk56xfLw_Ng";
 
   // Get all Notes
 
@@ -14,8 +17,7 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZiMTlkYTVjMGIyNDAxYWQwMDVmYjRhIn0sImlhdCI6MTcyMjkxNjI2MX0.x0TmuevrcI0LbsLF0qWA0tXkIfZ5MAEFVk56xfLw_Ng",
+        "auth-token": token,
       },
     });
     const json = await response.json();
@@ -29,8 +31,7 @@ const NoteState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZiMTlkYTVjMGIyNDAxYWQwMDVmYjRhIn0sImlhdCI6MTcyMjkxNjI2MX0.x0TmuevrcI0LbsLF0qWA0tXkIfZ5MAEFVk56xfLw_Ng",
+        "auth-token": token,
       },
       body: JSON.stringify({ title, content, tag }),
     });
@@ -45,8 +46,7 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZiMTlkYTVjMGIyNDAxYWQwMDVmYjRhIn0sImlhdCI6MTcyMjkxNjI2MX0.x0TmuevrcI0LbsLF0qWA0tXkIfZ5MAEFVk56xfLw_Ng",
+        "auth-token": token,
       },
     });
 
@@ -61,8 +61,7 @@ const NoteState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZiMTlkYTVjMGIyNDAxYWQwMDVmYjRhIn0sImlhdCI6MTcyMjkxNjI2MX0.x0TmuevrcI0LbsLF0qWA0tXkIfZ5MAEFVk56xfLw_Ng",
+        "auth-token": token,
       },
       body: JSON.stringify({ title, content, tag }),
     });

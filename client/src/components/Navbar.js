@@ -99,12 +99,38 @@ const Navbar = () => {
         </div>
         <hr className=" border-info border-2" />
         <div className="footer container pb-3">
-          <i
-            className="fa-solid fa-right-from-bracket"
-            style={{ cursor: "pointer" }}
+          <button
+            type="button"
+            className="border-0 bg-transparent"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
           >
-            &ensp; Logout
-          </i>
+            <Link
+              to="/login"
+              className="fa-solid fa-right-from-bracket"
+              style={{
+                cursor: "pointer",
+                color: "red",
+                textDecoration: "none",
+              }}
+            >
+              &ensp; Logout
+            </Link>
+          </button>
+          <button
+            type="button"
+            className="border-0 bg-transparent"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          >
+            <Link
+              to="/signup"
+              className="fa-solid fa-user-plus text-info mx-3"
+              style={{ cursor: "pointer", textDecoration: "none" }}
+            >
+              &ensp; Signup
+            </Link>
+          </button>
         </div>
       </div>
     </>

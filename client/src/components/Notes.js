@@ -11,6 +11,17 @@ const Notes = () => {
     // eslint-disable-next-line
   }, []);
 
+  const showNote = (currentNote) => {
+    ref1.current.click();
+    setNote({
+      id: currentNote._id,
+      etitle: currentNote.title,
+      econtent: currentNote.content,
+      // etag: currentNote.tag,
+      edate: currentNote.date,
+    });
+  };
+
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({
@@ -25,6 +36,7 @@ const Notes = () => {
     etitle: "",
     econtent: "",
     etag: "default",
+    edate: "",
   });
 
   const handleSubmit = (e) => {
@@ -36,10 +48,53 @@ const Notes = () => {
   };
 
   const ref = useRef(null);
-
+  const ref1 = useRef(null);
   return (
     <>
       <AddNote />
+      <button
+        ref={ref1}
+        type="button"
+        className="btn btn-info d-none"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal1"
+      ></button>
+
+      <div
+        className="modal fade"
+        id="exampleModal1"
+        tabIndex="-1"
+        aria-labelledby="exampleModal1Label"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModal1Label">
+                Your Note
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <h4>Title </h4>
+              <p>{note.etitle}</p>
+              <h4>Content </h4>
+              <p>{note.econtent}</p>
+            </div>
+            <div className="modal-footer d-flex justify-content-start">
+              <h5>Created on : </h5>
+              <small className="text-muted pt-1">
+                {new Date(note.edate).toUTCString()}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
       <button
         ref={ref}
         type="button"
@@ -133,7 +188,12 @@ const Notes = () => {
           .reverse()
           .map((note) => {
             return (
-              <NoteItem key={note._id} updateNote={updateNote} note={note} />
+              <NoteItem
+                key={note._id}
+                updateNote={updateNote}
+                showNote={showNote}
+                note={note}
+              />
             );
           })}
       </div>
