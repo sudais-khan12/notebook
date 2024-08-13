@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "khan is khan";
+const JWT_SECRET = "alliswell";
 const fetchUser = require("../middleware/fetchUser");
 
 // Create Route
@@ -91,7 +91,7 @@ router.post(
         return res
           .status(400)
           .json({
-            sucess,
+            success,
             error: "Please try to login with correct credentials",
           });
       }
@@ -137,6 +137,7 @@ router.post("/getuser", fetchUser, async (req, res) => {
     }
 
     res.send(user);
+    success = true;
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");

@@ -51,6 +51,7 @@ const Login = () => {
               name="email"
               aria-describedby="emailHelp"
               placeholder="example@ex.com"
+              required
               value={credentials.email}
               onChange={onChange}
             />
@@ -68,6 +69,7 @@ const Login = () => {
               id="exampleInputPassword1"
               name="password"
               placeholder="*********"
+              required
               value={credentials.password}
               onChange={onChange}
             />

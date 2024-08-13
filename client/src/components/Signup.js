@@ -4,8 +4,13 @@ import Cookies from "js-cookie";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ email: "", name: "", password: "" });
-
+  const [credentials, setCredentials] = useState({
+    email: "",
+    name: "",
+    password: "",
+    confirm: "",
+  });
+  const { name, email, password } = credentials;
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:5000/api/auth/createuser", {
@@ -14,25 +19,22 @@ const Signup = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: credentials.email,
-        name: credentials.username,
-        password: credentials.password,
+        email,
+        name,
+        password,
       }),
     });
     const json = await response.json();
-    if (json.success) {
-      // Save the auth token and redirect
-      Cookies.set("token", json.authtoken, {
-        expires: 7,
-        httpOnly: true,
-        sameSite: "lax",
-      });
-      
-      console.log(json);
-      navigate("/");
-    } else {
-      alert(json.error);
-    }
+
+    // Save the auth token and redirect
+    Cookies.set("token", json.authtoken, {
+      expires: 7,
+      httpOnly: true,
+      sameSite: "lax",
+    });
+
+    console.log(json);
+    navigate("/");
   };
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -51,6 +53,7 @@ const Signup = () => {
               className="form-control"
               id="exampleInputEmail3"
               name="email"
+              required
               aria-describedby="emailHelp"
               placeholder="example@ex.com"
               onChange={onChange}
@@ -68,6 +71,7 @@ const Signup = () => {
               className="form-control"
               id="username"
               name="username"
+              required
               placeholder="David .."
               onChange={onChange}
             />
@@ -81,6 +85,8 @@ const Signup = () => {
               className="form-control"
               id="exampleInputPassword1"
               name="password"
+              required
+              minLength={8}
               placeholder="*********"
               onChange={onChange}
             />
@@ -94,6 +100,8 @@ const Signup = () => {
               className="form-control"
               id="exampleInputPassword"
               name="confirm"
+              required
+              minLength={8}
               placeholder="*********"
               onChange={onChange}
             />
