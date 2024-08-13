@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 const Login = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,16 +19,14 @@ const Login = () => {
     const json = await response.json();
     if (json.success) {
       // Save the auth token and redirect
-        Cookies.set("token", json.authtoken, {
-          expires: 7,
-          secure: true,
-          httpOnly: true,
-          sameSite: "strict",
-        });
+      Cookies.set("token", json.authtoken, {
+        expires: 7,
+        secure: true,
+        httpOnly: true,
+        sameSite: "lax",
+      });
       console.log(json);
       navigate("/");
-      
-    //   navigate("/"); 
     } else {
       alert(json.error);
     }

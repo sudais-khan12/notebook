@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import noteContext from "./noteContext";
+import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import noteContext from "./noteContext";
 
 const NoteState = (props) => {
+  const [token, setToken] = useState(null);
   const host = "http://localhost:5000";
   const initialNotes = [];
 
   const [notes, setNotes] = useState(initialNotes);
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZiMTlkYTVjMGIyNDAxYWQwMDVmYjRhIn0sImlhdCI6MTcyMjkxNjI2MX0.x0TmuevrcI0LbsLF0qWA0tXkIfZ5MAEFVk56xfLw_Ng";
-
+  useEffect(() => {
+    const storedToken = Cookies.get("token");
+    setToken(storedToken);
+  }, []);
   // Get all Notes
 
   const getNote = async () => {
