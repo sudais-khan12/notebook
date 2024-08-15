@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
+import React, { useState } from "react";
 import noteContext from "./noteContext";
 
 const NoteState = (props) => {
-  const [token, setToken] = useState(null);
   const host = "http://localhost:5000";
   const initialNotes = [];
 
   const [notes, setNotes] = useState(initialNotes);
-  useEffect(() => {
-    const storedToken = Cookies.get("token");
-    setToken(storedToken);
-  }, []);
   // Get all Notes
 
   const getNote = async () => {
@@ -19,7 +13,7 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": token,
+        "auth-token": localStorage.getItem("token"),
       },
     });
     const json = await response.json();
@@ -33,7 +27,7 @@ const NoteState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": token,
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, content, tag }),
     });
@@ -48,7 +42,7 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": token,
+        "auth-token": localStorage.getItem("token"),
       },
     });
 
@@ -63,7 +57,7 @@ const NoteState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": token,
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, content, tag }),
     });

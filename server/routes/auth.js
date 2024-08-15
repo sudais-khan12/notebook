@@ -48,15 +48,20 @@ router.post(
             password: hash,
           });
 
-          const data = {
+          // const data = {
+          //   user: {
+          //     id: user.id,
+          //   },
+          // };
+
+          const payload = {
             user: {
               id: user.id,
             },
           };
 
-          let token = jwt.sign(data, JWT_SECRET);
-          success = true;
-          res.json({ success, token });
+          const authtoken = jwt.sign(payload, JWT_SECRET);
+          res.json({ success: true, authtoken });
         });
       });
     } catch (error) {
@@ -88,12 +93,10 @@ router.post(
       let user = await User.findOne({ email });
       if (!user) {
         success = false;
-        return res
-          .status(400)
-          .json({
-            success,
-            error: "Please try to login with correct credentials",
-          });
+        return res.status(400).json({
+          success,
+          error: "Please try to login with correct credentials",
+        });
       }
 
       const passwordCompare = await bcrypt.compare(password, user.password);
@@ -104,15 +107,15 @@ router.post(
           .json({ error: "Please try to login with correct credentials" });
       }
 
-      const data = {
+      const payload = {
         user: {
           id: user.id,
         },
       };
 
-      let token = jwt.sign(data, JWT_SECRET);
+      const authtoken = jwt.sign(payload, JWT_SECRET);
       success = true;
-      res.json({ success, token });
+      res.json({ success, authtoken });
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal Server Error");
@@ -128,12 +131,10 @@ router.post("/getuser", fetchUser, async (req, res) => {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) {
       success = false;
-      return res
-        .status(400)
-        .json({
-          success,
-          error: "Please try to login with correct credentials",
-        });
+      return res.status(400).json({
+        success,
+        error: "Please try to login with correct credentials",
+      });
     }
 
     res.send(user);

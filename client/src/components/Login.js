@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-const Login = () => {
+const Login = ({ showAlert }) => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const handleSubmit = async (e) => {
@@ -17,18 +16,14 @@ const Login = () => {
       }),
     });
     const json = await response.json();
+
     if (json.success) {
       // Save the auth token and redirect
-      Cookies.set("token", json.authtoken, {
-        expires: 7,
-        secure: true,
-        httpOnly: true,
-        sameSite: "lax",
-      });
-      console.log(json);
+      localStorage.setItem("token", json.authtoken);
       navigate("/");
+      showAlert("Logged In Successfully", "success");
     } else {
-      alert(json.error);
+      showAlert("Wrong Email or Password", "danger");
     }
   };
 
@@ -52,7 +47,6 @@ const Login = () => {
               aria-describedby="emailHelp"
               placeholder="example@ex.com"
               required
-              value={credentials.email}
               onChange={onChange}
             />
             <div id="emailHelp" className="form-text">
@@ -70,7 +64,6 @@ const Login = () => {
               name="password"
               placeholder="*********"
               required
-              value={credentials.password}
               onChange={onChange}
             />
           </div>

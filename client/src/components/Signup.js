@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Signup = () => {
+const Signup = ({ showAlert }) => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
@@ -27,14 +27,19 @@ const Signup = () => {
     const json = await response.json();
 
     // Save the auth token and redirect
-    Cookies.set("token", json.authtoken, {
-      expires: 7,
-      httpOnly: true,
-      sameSite: "lax",
-    });
-
-    console.log(json);
-    navigate("/");
+    if (json.success) {
+      // Save the auth token and redirect
+      Cookies.set("token", json.authtoken, {
+        expires: 7,
+        httpOnly: true,
+        sameSite: "lax",
+      });
+      localStorage.setItem("token", json.authtoken);
+      navigate("/");
+      showAlert(`${name} Your Account Created`, "success");
+    } else {
+      showAlert(json.error, "danger");
+    }
   };
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -45,7 +50,7 @@ const Signup = () => {
         <h1>Signup</h1>
         <form onSubmit={handleSubmit}>
           <div className="my-3">
-            <label for="exampleInputEmail3" className="form-label">
+            <label htmlFor="exampleInputEmail3" className="form-label">
               Email address
             </label>
             <input
@@ -63,21 +68,21 @@ const Signup = () => {
             </div>
           </div>
           <div className="my-3">
-            <label for="username" className="form-label">
+            <label htmlFor="username" className="form-label">
               User Name
             </label>
             <input
               type="text"
               className="form-control"
               id="username"
-              name="username"
+              name="name"
               required
               placeholder="David .."
               onChange={onChange}
             />
           </div>
           <div className="mt-3">
-            <label for="exampleInputPassword1" className="form-label">
+            <label htmlFor="exampleInputPassword1" className="form-label">
               Password
             </label>
             <input
@@ -92,7 +97,7 @@ const Signup = () => {
             />
           </div>
           <div className="my-3">
-            <label for="exampleInputPassword" className="form-label">
+            <label htmlFor="exampleInputPassword" className="form-label">
               Confirm Password
             </label>
             <input

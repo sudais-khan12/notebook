@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 
-const AddNote = () => {
+const AddNote = ({ showAlert }) => { 
   const context = useContext(noteContext);
   const { addNote } = context;
 
@@ -11,6 +11,7 @@ const AddNote = () => {
     document.querySelectorAll("input").forEach((el) => (el.value = ""));
     document.querySelector("textarea").value = "";
     addNote(note.title, note.content, note.tag);
+    showAlert("Added Successfully", "success");
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });

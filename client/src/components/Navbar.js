@@ -1,14 +1,36 @@
-import React, { useEffect, useRef, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useRef, useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import noteContext from "../context/notes/noteContext";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+  const host = "http://localhost:5000";
+  const getUser = async () => {
+    const response = await fetch(`${host}/api/auth/getuser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({}),
+    });
+    const user = await response.json();
+    setUserName(user.name);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   const context = useContext(noteContext);
   const { notes } = context;
   let location = useLocation();
   useEffect(() => {}, [location]);
   const handleClick = () => {
     ref.current.click();
+    getUser();
   };
   const ref = useRef(null);
   return (
@@ -54,15 +76,38 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            <div className="d-flex me-3 g-6" role="search">
-              <i
-                onClick={handleClick}
-                className="fa-solid fa-user h-50"
-                style={{ color: "white", cursor: "pointer" }}
-              >
-                &ensp; Account
-              </i>
-            </div>
+            {localStorage.getItem("token") ? (
+              <div className="d-flex me-3 g-6" role="search">
+                <i
+                  onClick={handleClick}
+                  className="fa-solid fa-user h-50"
+                  style={{ color: "white", cursor: "pointer" }}
+                >
+                  &ensp; Account
+                </i>
+              </div>
+            ) : (
+              <>
+                <button type="button" className="border-0 bg-transparent">
+                  <Link
+                    to="/signup"
+                    className="fa-solid fa-user-plus text-light mx-3"
+                    style={{ cursor: "pointer", textDecoration: "none" }}
+                  >
+                    &ensp;Signup
+                  </Link>
+                </button>
+                <button type="button" className="border-0 bg-transparent">
+                  <Link
+                    to="/login"
+                    className="fa-solid fa-right-to-bracket text-light"
+                    style={{ cursor: "pointer", textDecoration: "none" }}
+                  >
+                    &ensp;Login
+                  </Link>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -94,12 +139,13 @@ const Navbar = () => {
           ></button>
         </div>
         <div className="offcanvas-body">
-          <h2>Hello Sudais</h2>
+          <h2>Hello {userName}</h2>
           <h4>{notes.length} Notes</h4>
         </div>
         <hr className=" border-info border-2" />
         <div className="footer container pb-3">
           <button
+            onClick={logout}
             type="button"
             className="border-0 bg-transparent"
             data-bs-dismiss="offcanvas"
