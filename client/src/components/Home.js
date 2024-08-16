@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import noteContext from "../context/notes/noteContext";
 import AllNotes from "./AllNotes";
 import { useNavigate } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Home = ({ showAlert }) => {
   const context = useContext(noteContext);
   const { getAllNotes, allNotes } = context;
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ const Home = () => {
       getAllNotes();
     } else {
       navigate("/login");
-      // showAlert("Please Login First", "warning");
+      showAlert("Please Login First", "warning");
     }
     // eslint-disable-next-line
   }, []);
