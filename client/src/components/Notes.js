@@ -3,6 +3,7 @@ import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const Notes = ({ showAlert }) => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Notes = ({ showAlert }) => {
       getNote();
     } else {
       navigate("/login");
+      showAlert("Please Login First", "warning");
     }
     // eslint-disable-next-line
   }, []);
@@ -96,7 +98,7 @@ const Notes = ({ showAlert }) => {
             <div className="modal-footer d-flex justify-content-start">
               <h5>Created on : </h5>
               <small className="text-muted pt-1">
-                {new Date(note.edate).toUTCString()}
+                {moment(note.edate).fromNow()}
               </small>
             </div>
           </div>

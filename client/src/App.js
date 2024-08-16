@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import User from "./components/User";
+
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -29,6 +31,7 @@ function App() {
           <div className="container mt-3">
             <Routes>
               <Route path="/" element={<Home showAlert={showAlert} />} />
+              <Route path="/user" element={<User showAlert={showAlert} />} />
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login showAlert={showAlert} />} />
               <Route

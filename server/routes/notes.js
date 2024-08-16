@@ -43,6 +43,11 @@ router.get("/retrieve", fetchUser, async (req, res) => {
   res.json(notes);
 });
 
+router.get("/allNotes", fetchUser, async (req, res) => {
+  const notes = await Notes.find();
+  res.json(notes);
+});
+
 // Update Notes
 
 router.put("/update/:id", fetchUser, async (req, res) => {

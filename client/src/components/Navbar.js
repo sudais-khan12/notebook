@@ -83,7 +83,7 @@ const Navbar = () => {
                   className="fa-solid fa-user h-50"
                   style={{ color: "white", cursor: "pointer" }}
                 >
-                  &ensp; Account
+                  &ensp;Account
                 </i>
               </div>
             ) : (
@@ -138,10 +138,22 @@ const Navbar = () => {
             aria-label="Close"
           ></button>
         </div>
-        <div className="offcanvas-body">
-          <h2>Hello {userName}</h2>
-          <h4>{notes.length} Notes</h4>
-        </div>
+        {location.pathname === "/" ? (
+          <div className="offcanvas-body">
+            <h2>Hello {userName}</h2>
+            <h4>{notes.length} Notes</h4>
+          </div>
+        ) : (
+          <button type="button" className="border-0 bg-transparent">
+            <Link
+              to="/login"
+              className="fa-solid fa-right-to-bracket text-light"
+              style={{ cursor: "pointer", textDecoration: "none" }}
+            >
+              &ensp;Login
+            </Link>
+          </button>
+        )}
         <hr className=" border-info border-2" />
         <div className="footer container pb-3">
           <button
