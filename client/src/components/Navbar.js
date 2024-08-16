@@ -141,18 +141,25 @@ const Navbar = () => {
         {location.pathname === "/" ? (
           <div className="offcanvas-body">
             <h2>Hello {userName}</h2>
-            <h4>{notes.length} Notes</h4>
+            <h4>
+              {" "}
+              <button type="button" className="bg-transparent">
+                <Link
+                  to="/user"
+                  className="fa-solid fa-note-sticky text-dark"
+                  style={{ cursor: "pointer", textDecoration: "none" }}
+                >
+                  &ensp;My Notes
+                </Link>
+                <p>{notes.length} Notes</p>
+              </button>
+            </h4>
           </div>
         ) : (
-          <button type="button" className="border-0 bg-transparent">
-            <Link
-              to="/login"
-              className="fa-solid fa-right-to-bracket text-light"
-              style={{ cursor: "pointer", textDecoration: "none" }}
-            >
-              &ensp;Login
-            </Link>
-          </button>
+          <div className="offcanvas-body">
+            <h2>Hello {userName}</h2>
+            <h4>{notes.length} Notes</h4>
+          </div>
         )}
         <hr className=" border-info border-2" />
         <div className="footer container pb-3">
